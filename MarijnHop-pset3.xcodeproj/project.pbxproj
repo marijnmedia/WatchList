@@ -7,21 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C62AB5F41DDD1B4C00B5CED0 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62AB5F31DDD1B4C00B5CED0 /* MovieCell.swift */; };
 		C63B02BB1DDCDAE200E0F477 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B02BA1DDCDAE200E0F477 /* AppDelegate.swift */; };
 		C63B02BD1DDCDAE200E0F477 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63B02BC1DDCDAE200E0F477 /* ViewController.swift */; };
 		C63B02C01DDCDAE200E0F477 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63B02BE1DDCDAE200E0F477 /* Main.storyboard */; };
 		C63B02C21DDCDAE200E0F477 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C63B02C11DDCDAE200E0F477 /* Assets.xcassets */; };
-		C63B02C51DDCDAE200E0F477 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C63B02C31DDCDAE200E0F477 /* LaunchScreen.storyboard */; };
+		C69BA2731DDE4BBD009C158E /* ViewMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BA2721DDE4BBD009C158E /* ViewMovie.swift */; };
+		C69BA2751DDE6BCB009C158E /* movie-placeholder.gif in Resources */ = {isa = PBXBuildFile; fileRef = C69BA2741DDE6BCB009C158E /* movie-placeholder.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C62AB5F31DDD1B4C00B5CED0 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		C63B02B71DDCDAE200E0F477 /* MarijnHop-pset3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MarijnHop-pset3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C63B02BA1DDCDAE200E0F477 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C63B02BC1DDCDAE200E0F477 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C63B02BF1DDCDAE200E0F477 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C63B02C11DDCDAE200E0F477 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C63B02C41DDCDAE200E0F477 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C63B02C61DDCDAE200E0F477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C69BA2721DDE4BBD009C158E /* ViewMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMovie.swift; sourceTree = "<group>"; };
+		C69BA2741DDE6BCB009C158E /* movie-placeholder.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "movie-placeholder.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +61,10 @@
 				C63B02BA1DDCDAE200E0F477 /* AppDelegate.swift */,
 				C63B02BC1DDCDAE200E0F477 /* ViewController.swift */,
 				C63B02BE1DDCDAE200E0F477 /* Main.storyboard */,
+				C69BA2721DDE4BBD009C158E /* ViewMovie.swift */,
+				C62AB5F31DDD1B4C00B5CED0 /* MovieCell.swift */,
 				C63B02C11DDCDAE200E0F477 /* Assets.xcassets */,
-				C63B02C31DDCDAE200E0F477 /* LaunchScreen.storyboard */,
+				C69BA2741DDE6BCB009C158E /* movie-placeholder.gif */,
 				C63B02C61DDCDAE200E0F477 /* Info.plist */,
 			);
 			path = "MarijnHop-pset3";
@@ -123,8 +129,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C63B02C51DDCDAE200E0F477 /* LaunchScreen.storyboard in Resources */,
 				C63B02C21DDCDAE200E0F477 /* Assets.xcassets in Resources */,
+				C69BA2751DDE6BCB009C158E /* movie-placeholder.gif in Resources */,
 				C63B02C01DDCDAE200E0F477 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C62AB5F41DDD1B4C00B5CED0 /* MovieCell.swift in Sources */,
+				C69BA2731DDE4BBD009C158E /* ViewMovie.swift in Sources */,
 				C63B02BD1DDCDAE200E0F477 /* ViewController.swift in Sources */,
 				C63B02BB1DDCDAE200E0F477 /* AppDelegate.swift in Sources */,
 			);
@@ -150,14 +158,6 @@
 				C63B02BF1DDCDAE200E0F477 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C63B02C31DDCDAE200E0F477 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C63B02C41DDCDAE200E0F477 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -264,7 +264,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.mprog.MarijnHop-pset3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -276,7 +276,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.mprog.MarijnHop-pset3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};
@@ -299,6 +299,7 @@
 				C63B02CB1DDCDAE200E0F477 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
