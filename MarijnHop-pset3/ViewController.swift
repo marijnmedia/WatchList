@@ -23,27 +23,18 @@ class ViewController: UIViewController {
     var currentIndex: Int?
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    
-    // When the Add movie button is pressed, show search box
-    @IBAction func addButton(_ sender: Any) {
-        let searchBox = UIAlertController(title: "Search Movie", message: "Search for a movie to add to your watch list", preferredStyle: .alert)
-        var textField: UITextField?
-        
-        searchBox.addTextField(configurationHandler: {(input:UITextField) in
-            input.placeholder="Movie title"
-            input.clearButtonMode=UITextFieldViewMode.whileEditing
-            textField = input
-        })
-        
-        func search(actionTarget: UIAlertAction){
-            self.searchMovie(title: textField!.text!)
-        }
-        
-        searchBox.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.default, handler: search))
-        present(searchBox, animated: true, completion: nil)
+    // When search button is clicked
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchMovie(title: searchBar.text!)
+        searchBar.text = ""
     }
     
+    // When cancel button is clicked
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+    }
     
     //MARK: -  Search movie function
     func searchMovie(title: String){
@@ -65,8 +56,8 @@ class ViewController: UIViewController {
                         self.addMovie(movieDictionary: movieDictionary)
                         self.updateWatchlist()
                     }
-                    // Reload table
-                    self.tableView.reloadData()
+                    // Reload table on main thread to load faster (source: Andrew @http://stackoverflow.com/questions/4968424/tableview-reloaddata-doesnt-work-until-i-scroll-the-tableview)
+                    self.performSelector(onMainThread: #selector(ViewController.reloadTableView), with: nil, waitUntilDone: false)
                 }
             }
                 // Error for developer
@@ -111,7 +102,9 @@ class ViewController: UIViewController {
         
     }
     
-
+    func reloadTableView() {
+        self.tableView.reloadData()
+    }
 
     // Update the user's watchlist
     func updateWatchlist() {
@@ -121,12 +114,16 @@ class ViewController: UIViewController {
         self.watchlist.set(self.posters, forKey: "Poster")
         self.watchlist.set(self.genres, forKey: "Genre")
     }
-
     
-    // Load the user's watchlist
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBAction func editWatchlist(_ sender: Any) {
+        self.tableView.setEditing(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Load the user's watchlist
         if watchlist.array(forKey: "Title") != nil {
             posters = (self.watchlist.array(forKey: "Poster") as? Array<String>)!
             movies = (self.watchlist.array(forKey: "Title") as? Array<String>)!
@@ -134,8 +131,9 @@ class ViewController: UIViewController {
             genres = (self.watchlist.array(forKey: "Genre") as? Array<String>)!
             plots = (self.watchlist.array(forKey: "Plot") as? Array<String>)!
         }
+        
+        searchBar.delegate = self
     }
-
     
     // Show alert with error message
     func alertUser(message: String) {
@@ -148,6 +146,9 @@ class ViewController: UIViewController {
     }
 }
 
+
+extension ViewController: UISearchBarDelegate {
+}
 
 //MARK: - Tableview Delegate & Datasource
 
@@ -174,6 +175,11 @@ extension ViewController: UITableViewDataSource {
         return newCell
     }
     
+    func asyncLoadPoster(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) {
+       // TODO
+    }
+    
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -183,9 +189,7 @@ extension ViewController: UITableViewDataSource {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             removeMovie(indexPath.row)
         }
-
     }
-    
 }
 
 extension ViewController: UITableViewDelegate {
