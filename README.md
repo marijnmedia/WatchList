@@ -8,4 +8,4 @@ Minor Programmeren - UvA 2016/2017
 
 ![Alt text](/MarijnHop-pset3/WatchList.png/?raw=true "Optional Title")
 
-This app lets the user add movies to a watchlist.
+This app lets users add movies to a watchlist.
