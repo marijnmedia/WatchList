@@ -115,11 +115,6 @@ class ViewController: UIViewController {
         self.watchlist.set(self.genres, forKey: "Genre")
     }
     
-    @IBOutlet weak var editButton: UIBarButtonItem!
-    @IBAction func editWatchlist(_ sender: Any) {
-        self.tableView.setEditing(true, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,6 +139,19 @@ class ViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
         return
     }
+    
+    // Edit button
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBAction func editWatchlist(_ sender: Any) {
+        if tableView.isEditing {
+            tableView.setEditing(false, animated: true)
+            editButton.title = "Edit"
+        } else{
+            tableView.setEditing(true, animated: true)
+            editButton.title = "Done"
+        }
+    }
+    
 }
 
 
@@ -189,6 +197,15 @@ extension ViewController: UITableViewDataSource {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             removeMovie(indexPath.row)
         }
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        if (self.tableView.isEditing) {
+            removeMovie(indexPath.row)
+            return UITableViewCellEditingStyle.delete;
+        }
+        
+        return UITableViewCellEditingStyle.none;
     }
 }
 

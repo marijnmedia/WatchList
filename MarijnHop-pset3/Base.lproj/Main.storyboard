@@ -31,7 +31,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bke-9I-3dH" id="Pwy-QI-HU7">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4OJ-iV-N2D">
@@ -105,14 +105,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Watchlist" id="AIa-NK-4cl">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="v08-jB-vbu">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="WQg-UN-fNl">
                             <connections>
-                                <action selector="editWatchlist:" destination="BYZ-38-t0r" id="gdK-4T-tdx"/>
+                                <action selector="editWatchlist:" destination="BYZ-38-t0r" id="Gj8-sC-HfX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="editButton" destination="v08-jB-vbu" id="z7P-3j-ICD"/>
+                        <outlet property="editButton" destination="WQg-UN-fNl" id="L7j-JJ-4Gb"/>
                         <outlet property="searchBar" destination="2U5-3R-fdb" id="Psy-7d-i1F"/>
                         <outlet property="tableView" destination="hM8-6d-cuX" id="lJ0-fA-oiz"/>
                     </connections>
@@ -211,7 +211,7 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="m2R-fJ-IwE">
                                                 <rect key="frame" x="8" y="26" width="360" height="255"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
