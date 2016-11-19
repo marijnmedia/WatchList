@@ -22,8 +22,8 @@ class ViewController: UIViewController {
     
     var currentIndex: Int?
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
     
     // When search button is clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
         self.genres.append((movieDictionary["Genre"] as? String)!)
     }
     
-    // Get poster image from url in dictionary
+    // Get poster image from url
     func getPoster(poster: String) -> UIImage {
         var adress = poster.replacingOccurrences(of: "http",with: "https")
         adress = poster.replacingOccurrences(of: "httpss",with: "https")
@@ -132,7 +132,7 @@ class ViewController: UIViewController {
         self.watchlist.set(self.genres, forKey: "Genre")
     }
     
-    // When view loads
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -147,9 +147,9 @@ class ViewController: UIViewController {
             genres = (self.watchlist.array(forKey: "Genre") as? Array<String>)!
             plots = (self.watchlist.array(forKey: "Plot") as? Array<String>)!
         }
-        
-        // reference to searchbar delegate (apparently needed)
+
         searchBar.delegate = self
+        
     }
     
     // Show alert with message
@@ -228,6 +228,5 @@ extension ViewController: UITableViewDelegate {
     }
 }
 
-// empty searchbar delegate (apparently needed)
 extension ViewController: UISearchBarDelegate {
 }

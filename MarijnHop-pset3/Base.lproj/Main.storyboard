@@ -113,6 +113,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="WQg-UN-fNl" id="L7j-JJ-4Gb"/>
+                        <outlet property="navigationItem" destination="AIa-NK-4cl" id="Uoj-Cl-nkb"/>
                         <outlet property="searchBar" destination="2U5-3R-fdb" id="Psy-7d-i1F"/>
                         <outlet property="tableView" destination="hM8-6d-cuX" id="lJ0-fA-oiz"/>
                     </connections>
