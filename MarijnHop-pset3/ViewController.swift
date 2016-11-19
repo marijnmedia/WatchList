@@ -28,11 +28,13 @@ class ViewController: UIViewController {
     // When search button is clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchMovie(title: searchBar.text!)
+        view.endEditing(true)
         searchBar.text = ""
     }
     
     // When cancel button is clicked
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
         searchBar.text = ""
     }
     
@@ -46,28 +48,32 @@ class ViewController: UIViewController {
                 let movieObject =  try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 if let movieDictionary = movieObject {
                     
-                    // If movie is not found
+                    // Alert when movie is not found
                     let response = movieDictionary["Response"] as? String
                     if response == "False" || movie == "" {
-                        self.alertUser(message:"Movie not found")
+                        self.alertUser(title: "Oops!", message:"Movie not found")
+                    }
+                    // Alert when movie is already in the watchlist
+                    else if self.movies.contains(movieDictionary["Title"] as! String) == true  {
+                        self.alertUser(title: "Oops!", message:"This movie is already in your watchlist")
                     }
                     // When movie is found, add to watchlist
                     else {
                         self.addMovie(movieDictionary: movieDictionary)
                         self.updateWatchlist()
                     }
+                    
                     // Reload table on main thread to load faster (source: Andrew @http://stackoverflow.com/questions/4968424/tableview-reloaddata-doesnt-work-until-i-scroll-the-tableview)
                     self.performSelector(onMainThread: #selector(ViewController.reloadTableView), with: nil, waitUntilDone: false)
                 }
             }
-                // Error for developer
+            // Error for developer
             catch {
                 print(error)
             }
         }
         task.resume()
     }
-    
     
     // Add movie to dictionary
     func addMovie(movieDictionary: NSDictionary) {
@@ -78,7 +84,6 @@ class ViewController: UIViewController {
         self.genres.append((movieDictionary["Genre"] as? String)!)
     }
     
-    
     // Get poster image from url in dictionary
     func getPoster(poster: String) -> UIImage {
         var adress = poster.replacingOccurrences(of: "http",with: "https")
@@ -88,7 +93,6 @@ class ViewController: UIViewController {
         let image = UIImage(data: data)
         return image!
     }
-    
     
     // Remove movie from watchlist
     func removeMovie(_ index: Int) {
@@ -102,45 +106,7 @@ class ViewController: UIViewController {
         
     }
     
-    func reloadTableView() {
-        self.tableView.reloadData()
-    }
-
-    // Update the user's watchlist
-    func updateWatchlist() {
-        self.watchlist.set(self.movies, forKey: "Title")
-        self.watchlist.set(self.years, forKey: "Year")
-        self.watchlist.set(self.plots, forKey: "Plot")
-        self.watchlist.set(self.posters, forKey: "Poster")
-        self.watchlist.set(self.genres, forKey: "Genre")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Load the user's watchlist
-        if watchlist.array(forKey: "Title") != nil {
-            posters = (self.watchlist.array(forKey: "Poster") as? Array<String>)!
-            movies = (self.watchlist.array(forKey: "Title") as? Array<String>)!
-            years = (self.watchlist.array(forKey: "Year") as? Array<String>)!
-            genres = (self.watchlist.array(forKey: "Genre") as? Array<String>)!
-            plots = (self.watchlist.array(forKey: "Plot") as? Array<String>)!
-        }
-        
-        searchBar.delegate = self
-    }
-    
-    // Show alert with error message
-    func alertUser(message: String) {
-        let alertController = UIAlertController(title: "Oops!", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-        return
-    }
-    
-    // Edit button
+    // Edit button to remove movies from watchlist
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBAction func editWatchlist(_ sender: Any) {
         if tableView.isEditing {
@@ -152,14 +118,53 @@ class ViewController: UIViewController {
         }
     }
     
-}
+    // reload watchlist
+    func reloadTableView() {
+        self.tableView.reloadData()
+    }
 
-
-extension ViewController: UISearchBarDelegate {
+    // Update watchlist
+    func updateWatchlist() {
+        self.watchlist.set(self.movies, forKey: "Title")
+        self.watchlist.set(self.years, forKey: "Year")
+        self.watchlist.set(self.plots, forKey: "Plot")
+        self.watchlist.set(self.posters, forKey: "Poster")
+        self.watchlist.set(self.genres, forKey: "Genre")
+    }
+    
+    // When view loads
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // If watchlist is empty, show welcome message
+        if watchlist.array(forKey: "Title") == nil {
+            alertUser(title: "Welcome!", message:"Search for movies and add them to your watchlist.")
+        } else {
+            // Load the user's watchlist
+            posters = (self.watchlist.array(forKey: "Poster") as? Array<String>)!
+            movies = (self.watchlist.array(forKey: "Title") as? Array<String>)!
+            years = (self.watchlist.array(forKey: "Year") as? Array<String>)!
+            genres = (self.watchlist.array(forKey: "Genre") as? Array<String>)!
+            plots = (self.watchlist.array(forKey: "Plot") as? Array<String>)!
+        }
+        
+        // reference to searchbar delegate (apparently needed)
+        searchBar.delegate = self
+    }
+    
+    // Show alert with message
+    func alertUser(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+        return
+    }
+    
 }
 
 //MARK: - Tableview Delegate & Datasource
-
 extension ViewController: UITableViewDataSource {
     // Set number of rows.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -183,30 +188,18 @@ extension ViewController: UITableViewDataSource {
         return newCell
     }
     
-    func asyncLoadPoster(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) {
-       // TODO
-    }
-    
-    
+    // Make cells editable
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    // remove movie from watchlist by swiping left on cell
+    // Remove movie from watchlist by swiping left on cell
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             removeMovie(indexPath.row)
         }
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        if (self.tableView.isEditing) {
-            removeMovie(indexPath.row)
-            return UITableViewCellEditingStyle.delete;
-        }
-        
-        return UITableViewCellEditingStyle.none;
-    }
 }
 
 extension ViewController: UITableViewDelegate {
@@ -219,11 +212,22 @@ extension ViewController: UITableViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewMovie = segue.destination as! ViewMovie
         
-        viewMovie.moviePoster = getPoster(poster: self.posters[tableView.indexPathForSelectedRow!.row])
+        // Get poster image for next view. If not found, use default image
+        if posters[tableView.indexPathForSelectedRow!.row] != "N/A" {
+            viewMovie.moviePoster = getPoster(poster: self.posters[tableView.indexPathForSelectedRow!.row])
+        }else {
+            viewMovie.moviePoster = UIImage(named: "default_poster")
+        }
+        
+        // Get movie info for next view
         viewMovie.movieTitle = self.movies[tableView.indexPathForSelectedRow!.row]
         viewMovie.movieYear = self.years[tableView.indexPathForSelectedRow!.row]
         viewMovie.movieGenre = self.genres[tableView.indexPathForSelectedRow!.row]
         viewMovie.movieDescription = self.plots[tableView.indexPathForSelectedRow!.row]
         viewMovie.currentIndex = currentIndex
     }
+}
+
+// empty searchbar delegate (apparently needed)
+extension ViewController: UISearchBarDelegate {
 }
